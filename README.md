@@ -35,15 +35,16 @@ brightest.
 
 The script can be configured in one of four ways:
 
-1. *Command line args*.  The args are in the same order as listed
++ *Command line args*.  The args are in the same order as listed
 above.  The CLI args would only be used for testing or as arguments in
 the ExecStart statement in the systemd unit file.
 
-2. *Environment Variables*. See `examples/systemd/
++ *Environment Variables*. See [systemd unit
+file](examples/systemd/wifi-led.service)
 
-3. *Environment File*. See `examples/default/
++ *Environment File*. See [defaults file](examples/default/wifi-led)
 
-4. Defaults that I chose:
++  Defaults that I chose:
     1.  wlan0
     2.  21
     3.  128
