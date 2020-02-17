@@ -37,17 +37,18 @@ The script can be configured in one of four ways:
 
 + *Command line args*.  The args are in the same order as listed
 above.  The CLI args would only be used for testing or as arguments in
-the ExecStart statement in the systemd unit file.
+the ExecStart statement in the [systemd unit
+file](examples/systemd/wifi-led.service)
 
 + *Environment Variables*. See [systemd unit
 file](examples/systemd/wifi-led.service)
 
 + *Environment File*. See [defaults file](examples/default/wifi-led)
 
-+  Defaults that I chose:
-    1.  wlan0
-    2.  21
-    3.  128
++  Defaults that I chose and hard-coded:
+  +  Interface: wlan0
+  +  GPIO Pin: 21
+  +  Brightness: 128
 
 ## Special Requirements:
 
