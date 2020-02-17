@@ -62,11 +62,12 @@ Place `wifi-led.py` somewhere from where
 systemd can run it, such as `/usr/local/bin`.
 
 Modify `examples/systemd/wifi-led.service` and place it in
-`/etc/systemd/system`
+`/etc/systemd/system` See also the
+[README](examples/systemd/README.md)
 
-If using an environment file, modify
-`examples/default/wifi-led` and place it where appropriate
-for your OS.  In Raspbian this is `/etc/default/`.
+If using an environment file, modify `examples/default/wifi-led` (See
+the [README](examples/default/README.md)). Place the file where
+appropriate for your OS.  In Raspbian this is `/etc/default/`.
 
     sudo systemctl enable wifi-led.service
     sudo systemctl start wifi-led.service
