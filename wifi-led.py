@@ -9,7 +9,7 @@ import time
 
 #My lame attempt at creating immutable global variables
 #I hate mutable global variables
-config=("wlan0", "/sbin/wpa_cli", 13, 20)
+config=("wlan0", "/sbin/wpa_cli", 21, 128, 1000)
 
 class WifiStatus:
     def __init__(self, interface):
@@ -40,13 +40,14 @@ class WifiStatus:
         return retval
 
 class LED:
-    def __init__(self, gpio):
-        self.gpio=gpio
+    def __init__(self, gpio, brightness):
+        self.gpio=int(gpio)
         self.blink=0
-        self.duty=config[3]
+        self.freq=config[4]
+        self.duty=int(brightness)
         self.blinkoff=int(self.duty / 6)
         self.pigpio=pigpio.pi()
-        self.pigpio.set_PWM_frequency(self.gpio, 1000)
+        self.pigpio.set_PWM_frequency(self.gpio, self.freq)
     def LedOn(self):
         print("Turn on LED {}".format(gpio))
         self.pigpio.set_PWM_dutycycle(self.gpio, self.duty)
@@ -91,13 +92,26 @@ def GetGPIO ():
         print ("Using default GPIO {}".format(gpio), flush=True)
     return gpio
 
+def GetBrightness ():
+    brightness=config[3]
+    if len(sys.argv) > 3:
+        gpio=sys.argv[3]
+        print ("Brightness {} from command line".format(brightness), flush=True)
+    elif "ENV_BRIGHTNESS" in os.environ:
+        gpio=os.getenv("ENV_BRIFHTNESS")
+        print ("Brightness {} from environment".format(brightness), flush=True)
+    else:
+        print ("Using default brightness {}".format(brightness), flush=True)
+    return brightness
+
 
 interface=GetInt()
 gpio=GetGPIO()
+brightness=GetBrightness()
 
 wifi=WifiStatus(interface)
 
-LED=LED(gpio)
+LED=LED(gpio,brightness)
 oldstate=3
 
 while True:
