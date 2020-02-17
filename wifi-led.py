@@ -49,13 +49,13 @@ class LED:
         self.pigpio=pigpio.pi()
         self.pigpio.set_PWM_frequency(self.gpio, self.freq)
     def LedOn(self):
-        print("Turn on LED {}".format(gpio))
+        print("Turn on LED {}".format(gpio), flush=True)
         self.pigpio.set_PWM_dutycycle(self.gpio, self.duty)
     def LedOff(self):
-        print("Turn off LED {}".format(str(gpio)))
+        print("Turn off LED {}".format(str(gpio)), flush=True)
         self.pigpio.set_PWM_dutycycle(self.gpio, 0)
     def LedBlinkOff(self):
-        print("Turn down LED {}".format(str(gpio)))
+        print("Turn down LED {}".format(str(gpio)), flush=True)
         self.pigpio.set_PWM_dutycycle(self.gpio, self.blinkoff)
     def LedBlink(self):
         if self.blink==1:
@@ -119,7 +119,7 @@ while True:
     if state == 1:
         LED.LedBlink()
     if state != oldstate:
-        print ("State {}".format(state))
+        print ("New state: {}".format(state), flush=True)
         if state == 2:
             LED.LedOn()
         elif state == 1:

@@ -1,5 +1,5 @@
 [Unit]
-Description=Listen for poweroff button
+Description=Control external LED on RPI for wifi status
 
 [Service]
 Type=simple
@@ -12,16 +12,17 @@ RestartSec=5
 # Hard-coded defaults will be used
 #
 # Only one of the following Environment lines should be used
-#Environment=ENV_GPIO=26  #Set GPIO pin
-#Environment=ENV_STATE=RISING #Set direction
-#Environment=ENV_GPIO=26 ENV_STATE=RISING #set both
+#Environment=ENV_INT=wlan0 #Set interface
+#Environment=ENV_GPIO=21  #Set GPIO pin
+#Environment=ENV_BRIGHTNESS=128  #Set brightness  1-255, 255 is brightest
+#Environment=ENV_INT=wlan0 ENV_GPIO=26 ENV_BRIGHTNESS=20 #Set all three
 #
 # Or, instead of the Environment command,
 # use a file instead
-EnvironmentFile=/etc/default/listen-for-shutdown
+EnvironmentFile=/etc/default/wifi-led
 
 
-ExecStart=/usr/local/bin/listen-for-shutdown.py
+ExecStart=/usr/local/bin/wifi-led.py
 
 [Install]
 WantedBy=multi-user.target
