@@ -46,9 +46,9 @@ file](examples/systemd/wifi-led.service)
 + *Environment File*. See [defaults file](examples/default/wifi-led)
 
 +  Defaults that I chose and hard-coded:
-  +  Interface: wlan0
-  +  GPIO Pin: 21
-  +  Brightness: 128
+   +  Interface: wlan0
+   +  GPIO Pin: 21
+   +  Brightness: 128
 
 ## Special Requirements:
 
