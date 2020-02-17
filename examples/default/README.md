@@ -3,7 +3,7 @@
 The config file, if used, would normally be placed somewhere like
 `/etc/default` or wherever your OS stores system defaults.
 
-Two values are recognized:
+Three values are recognized:
 
 * `ENV_INT` specifies the wifi interface
     + This is usually something like wlan0
