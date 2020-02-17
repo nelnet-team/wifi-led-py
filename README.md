@@ -1,12 +1,13 @@
-# GPIO Shutdown For Raspberry Pi
+# External WiFi LED  For Raspberry Pi
 
 ## About
 
 This is a small script, intended to be run from systemd, that controls
 an external LED based on WiFi status.
 
-Note: The pin that drives the LED is identified by the *GPIO Number*
-not the pysical pin number
+Note: The pin that drives the LED is identified by the [GPIO
+Number](https://www.raspberrypi.org/documentation/usage/gpio/) not the
+pysical pin number.
 
 The script runs on a 1 second loop. It uses the external `wpa_cli`
 command to get the status of the given WiFi interface.  It looks for
@@ -23,17 +24,29 @@ These states are printed to `STDOUT`, so they will show up in
 
 ## Configuration
 
-The script can be configured in one of three ways:
+There are three necessary configuration items:
 
-1. *Command line args*.  The pin is the first arg.  The state
-("FALLING" or "RISING") is the second arg.  If no state, or no pin or
-state is specified, then the values will either be the hard-coded
-defaults or those values that are defined as below.  The command line
-args take precedence over the methods 2 or 3.
+1.  WiFi interface.  Usually something like `wlan0`
+
+2.  GPIO pin number for LED
+
+3.  Brigtness.  This is a number from 1 to 255, with 255 being the
+brightest.
+
+The script can be configured in one of four ways:
+
+1. *Command line args*.  The args are in the same order as listed
+above.  The CLI args would only be used for testing or as arguments in
+the ExecStart statement in the systemd unit file.
 
 2. *Environment Variables*. See `examples/systemd/
 
 3. *Environment File*. See `examples/default/
+
+4. Defaults that I chose:
+    1.  wlan0
+    2.  21
+    3.  128
 
 ## Special Requirements:
 
