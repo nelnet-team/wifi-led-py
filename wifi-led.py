@@ -11,7 +11,6 @@ class WifiStatus:
     def __init__(self, config):
         self.interface=config.interface
         self.cmd=config.cmd
-        self.brightness=config.brightness
         self.statusmap={
             "UNKNOWN": 0,
             "DISCONNECTED": 0,
@@ -34,8 +33,7 @@ class WifiStatus:
             state="UNKNOWN"
         else:
             state=rawstate.group(1)
-        retval=self.statusmap[state]
-        return retval
+        return self.statusmap[state]
 
 class LED:
     def __init__(self, config):
@@ -124,8 +122,6 @@ while True:
         print ("New state: {}".format(state), flush=True)
         if state == 2:
             LED.LedOn()
-        elif state == 1:
-            LED.LedBlink()
         else:
             LED.LedOff()
 
