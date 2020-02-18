@@ -107,23 +107,24 @@ class Config:
             print ("Using default brightness {}".format(brightness), flush=True)
         self.brightness=brightness
 
+def mainloop(oldstate):
+    state=wifi.GetState()
+    if state == 2:
+        LED.LedBlink()
+    if state != oldstate:
+        print ("New state: {}".format(state), flush=True)
+        if state == 1:
+            LED.LedOn()
+        else:
+            LED.LedOff()
+    return state
 
 config=Config()
 wifi=WifiStatus(config)
 LED=LED(config)
 
-oldstate=3
+loopstate=3
 
 while True:
-    state=wifi.GetState()
-    if state == 1:
-        LED.LedBlink()
-    if state != oldstate:
-        print ("New state: {}".format(state), flush=True)
-        if state == 2:
-            LED.LedOn()
-        else:
-            LED.LedOff()
-
-    oldstate=state
+    loopstate=mainloop(loopstate)
     time.sleep(1)
