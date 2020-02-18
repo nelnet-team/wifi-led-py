@@ -70,50 +70,28 @@ class Config:
         }
         self.cmd="/sbin/wpa_cli"
         self.freq=1000
-        self.SetInt()
-        self.SetGPIO()
-        self.SetBrightness()
-    def SetInt (self):
-        interface=self.defaults["interface"]
-        if len(sys.argv) > 1:
-            interface=sys.argv[1]
-            print ("Interface {} from command line".format(interface), flush=True)
-        elif "ENV_INT" in os.environ:
-            interface=os.getenv("ENV_INT")
-            print ("Interface {} from environment".format(interface), flush=True)
+        self.interface=self.GetVal(1, "interface", "ENV_INT")
+        self.gpio=self.GetVal(2, "gpio", "ENV_GPIO")
+        self.brightness=self.GetVal(3, "brightness", "ENV_BRIGHTNESS")
+    def GetVal (self,argpos,argname,envname):
+        thisval=self.defaults[argname]
+        if len(sys.argv) > argpos:
+            thisval=sys.argv[argpos]
+            print ("{} {} from command line".format(argname, thisval), flush=True)
+        elif "envname" in os.environ:
+            thisval=os.getenv("envname")
+            print ("{} {} from environment".format(argname, thisval), flush=True)
         else:
-            print ("Using default interface {}".format(interface), flush=True)
-        self.interface=interface
-    def SetGPIO (self):
-        gpio=self.defaults["gpio"]
-        if len(sys.argv) > 2:
-            gpio=sys.argv[2]
-            print ("GPIO {} from command line".format(gpio), flush=True)
-        elif "ENV_GPIO" in os.environ:
-            gpio=os.getenv("ENV_GPIO")
-            print ("GPIO {} from environment".format(gpio), flush=True)
-        else:
-            print ("Using default GPIO {}".format(gpio), flush=True)
-        self.gpio=gpio
-    def SetBrightness (self):
-        brightness=self.defaults["brightness"]
-        if len(sys.argv) > 3:
-            gpio=sys.argv[3]
-            print ("Brightness {} from command line".format(brightness), flush=True)
-        elif "ENV_BRIGHTNESS" in os.environ:
-            gpio=os.getenv("ENV_BRIFHTNESS")
-            print ("Brightness {} from environment".format(brightness), flush=True)
-        else:
-            print ("Using default brightness {}".format(brightness), flush=True)
-        self.brightness=brightness
+            print ("Using default {} {}".format(argname, thisval), flush=True)
+        return thisval
 
 def mainloop(oldstate):
     state=wifi.GetState()
-    if state == 2:
+    if state == 1:
         LED.LedBlink()
     if state != oldstate:
         print ("New state: {}".format(state), flush=True)
-        if state == 1:
+        if state == 2:
             LED.LedOn()
         else:
             LED.LedOff()
