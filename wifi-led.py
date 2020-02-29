@@ -89,8 +89,8 @@ class Config:
             thisval = sys.argv[argpos]
             print("{} {} from command line".format(
                 argname, thisval), flush=True)
-        elif "envname" in os.environ:
-            thisval = os.getenv("envname")
+        elif envname in os.environ:
+            thisval = os.getenv(envname)
             print("{} {} from environment".format(
                 argname, thisval), flush=True)
         else:
